@@ -24,7 +24,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "NestMate — Know exactly who owes what",
+  title: "NestMate — Shared Living, Zero Friction",
   description:
     "Shared household expense and chore management, without the group-chat math.",
 };
@@ -38,7 +38,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${instrumentSerif.variable} ${inter.variable} ${plusJakarta.variable} antialiased`}
+          className={`${instrumentSerif.variable} ${inter.variable} ${plusJakarta.variable} font-sans antialiased`}
         >
           {children}
         </body>
