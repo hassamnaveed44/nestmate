@@ -53,3 +53,37 @@
 .animate-auth-enter {
   animation: authEnter 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+/* --- Clerk Dev Mode & Attribution Removal --- */
+
+/* 1. Remove the orange development banner and all Clerk watermark tags */
+.cl-internal-ph3z0t,
+[data-localization-key*="developmentMode"],
+[data-localization-key*="securedByClerk"],
+.cl-dev-overlay,
+.cl-badge,
+.cl-development-mode,
+.cl-rootBox .cl-card > *:last-child:not(.cl-footer):not(.cl-footerAction),
+.cl-footer > div:nth-child(2),
+.cl-footerPages,
+.cl-footerPagesLink {
+  display: none !important;
+}
+
+/* 2. Target any container inside the footer that follows the action link */
+.cl-footer .cl-footerAction ~ * {
+  display: none !important;
+}
+
+/* 3. Keep the switch link (Sign in / Sign up) visible and centered */
+.cl-footerAction {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* 4. Remove extra bottom card padding/bleed */
+.cl-card {
+  padding-bottom: 1.5rem !important;
+}
