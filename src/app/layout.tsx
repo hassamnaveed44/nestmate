@@ -1,3 +1,4 @@
+
 // src/app/layout.tsx
 import type { Metadata } from "next";
 import { Instrument_Serif, Inter, Plus_Jakarta_Sans } from "next/font/google";
@@ -24,7 +25,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "NestMate — Know exactly who owes what",
+  title: "NestMate — Shared Living, Zero Friction",
   description:
     "Shared household expense and chore management, without the group-chat math.",
 };
@@ -46,3 +47,4 @@ export default function RootLayout({
     </ClerkProvider>
   );
 }
+

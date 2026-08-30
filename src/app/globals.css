@@ -14,33 +14,26 @@
   --font-sans: var(--font-inter);
   --font-bridge: var(--font-plus-jakarta);
 
-  /* Radius — Phase 3 §5.3, no pill shapes */
+  /* Radius — Phase 3 §5.3, no pill shapes on controls */
   --radius-control: 6px;
   --radius-button: 10px;
   --radius-card: 16px;
   --radius-modal: 20px;
   --radius-hero: 24px;
-
-  /* Spacing scale is Tailwind's default 4px step, which already
-     aligns with the 8pt/4px half-step grid — no override needed */
 }
 
 @layer base {
+  html,
+  body {
+    overflow-x: hidden; /* hard guard against horizontal scroll */
+  }
+
   body {
     background-color: var(--color-warm-ivory);
     color: var(--color-charcoal);
     font-family: var(--font-sans);
   }
 
-  h1, h2 {
-    font-family: var(--font-serif);
-  }
-
-  h3, h4 {
-    font-family: var(--font-bridge);
-  }
-
-  /* Accessibility — Phase 3 §11: visible 2px focus ring */
   :focus-visible {
     outline: 2px solid var(--color-charcoal);
     outline-offset: 2px;
