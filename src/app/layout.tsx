@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Instrument_Serif, Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
+import { TransitionView } from "@/components/motion/TransitionView";
 
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
@@ -40,7 +41,10 @@ export default function RootLayout({
         <body
           className={`${instrumentSerif.variable} ${inter.variable} ${plusJakarta.variable} font-sans antialiased`}
         >
-          {children}
+          <TransitionView >
+            {children}
+          </TransitionView>
+          
         </body>
       </html>
     </ClerkProvider>
