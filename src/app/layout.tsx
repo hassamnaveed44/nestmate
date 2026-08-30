@@ -1,4 +1,3 @@
-
 // src/app/layout.tsx
 import type { Metadata } from "next";
 import { Instrument_Serif, Inter, Plus_Jakarta_Sans } from "next/font/google";
@@ -39,7 +38,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${instrumentSerif.variable} ${inter.variable} ${plusJakarta.variable} antialiased`}
+          className={`${instrumentSerif.variable} ${inter.variable} ${plusJakarta.variable} font-sans antialiased`}
         >
           {children}
         </body>
@@ -47,4 +46,3 @@ export default function RootLayout({
     </ClerkProvider>
   );
 }
-
