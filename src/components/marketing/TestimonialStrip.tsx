@@ -1,5 +1,3 @@
-
-// src/components/marketing/TestimonialStrip.tsx
 "use client";
 
 import { useRef } from "react";
@@ -50,29 +48,35 @@ export function TestimonialStrip() {
   const trackRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
-  () => {
-    const cards = trackRef.current?.children;
-    if (!cards?.length) return;
+    () => {
+      const cards = trackRef.current?.children;
+      if (!cards?.length) return;
 
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
-    if (reduceMotion) return;
+      if (reduceMotion) return;
 
-    gsap.from(cards, {
-      y: 16,
-      duration: 0.6,
-      stagger: 0.08,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 90%",
-      },
-    });
-  },
-  { scope: sectionRef }
-);
+      gsap.fromTo(
+        cards,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.65,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: trackRef.current,
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
+    },
+    { scope: sectionRef }
+  );
 
   return (
     <section
@@ -136,4 +140,3 @@ export function TestimonialStrip() {
     </section>
   );
 }
-

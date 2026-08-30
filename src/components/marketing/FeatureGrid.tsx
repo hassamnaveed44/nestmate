@@ -1,13 +1,50 @@
-// src/components/marketing/FeatureGrid.tsx
 "use client";
 
+import { useRef } from "react";
 import { FileText, Receipt, RefreshCw, Sparkles } from "lucide-react";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { CounterTween } from "@/components/motion/CounterTween";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const bars = [22, 38, 68, 48, 88, 32, 58];
 
 export function FeatureGrid() {
+  const chartContainerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const barsElements = chartContainerRef.current?.children;
+      if (!barsElements?.length) return;
+
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      if (reduceMotion) return;
+
+      gsap.fromTo(
+        barsElements,
+        { scaleY: 0, transformOrigin: "bottom center" },
+        {
+          scaleY: 1,
+          duration: 0.7,
+          stagger: 0.06,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: chartContainerRef.current,
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
+    },
+    { scope: chartContainerRef }
+  );
+
   return (
     <section id="features" className="bg-warm-ivory py-16 md:py-24">
       <div className="mx-auto max-w-[1200px] px-5 md:px-10">
@@ -42,11 +79,11 @@ export function FeatureGrid() {
             </div>
 
             {/* Refined bar chart */}
-            <div className="flex h-24 items-end gap-1.5">
+            <div ref={chartContainerRef} className="flex h-24 items-end gap-1.5">
               {bars.map((h, i) => (
                 <div
                   key={i}
-                  className="w-full rounded-t-md bg-muted-olive/65 transition-all duration-500 group-hover:bg-muted-olive/80"
+                  className="w-full rounded-t-md bg-muted-olive/65 transition-colors duration-300 group-hover:bg-muted-olive/80"
                   style={{ height: `${h}%` }}
                 />
               ))}
