@@ -1,3 +1,4 @@
+
 // src/components/marketing/TestimonialStrip.tsx
 "use client";
 
@@ -49,28 +50,29 @@ export function TestimonialStrip() {
   const trackRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
-    () => {
-      const cards = trackRef.current?.children;
-      if (!cards?.length) return;
+  () => {
+    const cards = trackRef.current?.children;
+    if (!cards?.length) return;
 
-      const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-      gsap.from(cards, {
-        opacity: 0,
-        x: reduceMotion ? 0 : 36,
-        duration: 0.85,
-        stagger: 0.14,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-        },
-      });
-    },
-    { scope: sectionRef }
-  );
+    if (reduceMotion) return;
+
+    gsap.from(cards, {
+      y: 16,
+      duration: 0.6,
+      stagger: 0.08,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 90%",
+      },
+    });
+  },
+  { scope: sectionRef }
+);
 
   return (
     <section
@@ -79,32 +81,33 @@ export function TestimonialStrip() {
     >
       <div className="mx-auto max-w-[1200px] px-5 md:px-10">
         {/* Section header */}
-        <div className="mb-12 max-w-xl">
+        <div className="mb-10 max-w-xl md:mb-12">
           <h2 className="mb-3 font-serif text-[32px] leading-[1.2] text-charcoal md:text-[36px]">
             Households already living lighter.
           </h2>
+
           <p className="text-base text-charcoal/70">
             Real situations, the kind NestMate was actually designed around.
           </p>
         </div>
 
-        {/* Cards track */}
+        {/* Cards */}
         <div
           ref={trackRef}
-          className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] md:gap-6 [&::-webkit-scrollbar]:hidden"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6"
         >
           {testimonials.map((t) => (
             <figure
               key={t.name}
-              className="group w-[85%] shrink-0 snap-start rounded-card border border-sand-border bg-soft-sand/20 p-7 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-charcoal/20 hover:shadow-[0_10px_30px_-12px_rgba(23,23,20,0.1)] sm:w-[70%] md:w-[calc(33.333%-16px)] md:p-8"
+              className="group flex flex-col rounded-card border border-sand-border bg-soft-sand/20 p-7 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-charcoal/20 hover:shadow-[0_10px_30px_-12px_rgba(23,23,20,0.1)] md:p-8"
             >
               <Quote
-                size={26}
+                size={24}
                 className="mb-5 text-charcoal/15"
                 strokeWidth={1.5}
               />
 
-              <blockquote className="mb-7 min-h-[100px] text-[15.5px] leading-relaxed text-charcoal/80">
+              <blockquote className="mb-6 flex-1 text-[15.5px] leading-relaxed text-charcoal/80">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
 
@@ -118,8 +121,11 @@ export function TestimonialStrip() {
                 >
                   {t.initials}
                 </div>
+
                 <div>
-                  <p className="font-bridge text-sm text-charcoal">{t.name}</p>
+                  <p className="font-bridge text-sm text-charcoal">
+                    {t.name}
+                  </p>
                   <p className="text-xs text-charcoal/55">{t.role}</p>
                 </div>
               </figcaption>
@@ -130,3 +136,4 @@ export function TestimonialStrip() {
     </section>
   );
 }
+

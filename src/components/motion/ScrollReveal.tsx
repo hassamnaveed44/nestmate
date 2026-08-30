@@ -17,7 +17,7 @@ interface ScrollRevealProps {
 export function ScrollReveal({
   children,
   className,
-  stagger = 0.1,
+  stagger = 0.08,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -30,13 +30,18 @@ export function ScrollReveal({
         "(prefers-reduced-motion: reduce)"
       ).matches;
 
+      if (reduceMotion) return;
+
+      // Very light movement only — cards stay fully visible
       gsap.from(targets, {
-        opacity: 0,
-        y: reduceMotion ? 0 : 28,
-        duration: 0.8,
+        y: 16,
+        duration: 0.6,
         stagger,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ref.current, start: "top 80%" },
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top 90%",
+        },
       });
     },
     { scope: ref }
