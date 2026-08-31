@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Home, ArrowRight } from "lucide-react";
+import { Home, ArrowRight, Loader2 } from "lucide-react";
 
 export function CreateHouseholdForm() {
   const router = useRouter();
@@ -43,25 +43,23 @@ export function CreateHouseholdForm() {
   }
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-card border border-sand-border bg-soft-sand/35 p-7 transition-colors duration-200 hover:border-charcoal/20 md:p-8">
+    <div className="group flex h-full flex-col justify-between rounded-2xl border border-sand-border bg-soft-sand/40 p-7 shadow-[0_2px_8px_rgba(23,23,20,0.03)] backdrop-blur-xs transition-all duration-200 hover:border-charcoal/30 hover:shadow-[0_4px_16px_rgba(23,23,20,0.06)] md:p-8">
       <div>
-        <div className="mb-4 flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-sand-border bg-warm-ivory">
-            <Home size={16} className="text-charcoal" strokeWidth={1.75} />
-          </div>
-          <h2 className="font-bridge text-lg text-charcoal md:text-xl">
-            Create a household
-          </h2>
+        <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-sand-border bg-warm-ivory shadow-xs">
+          <Home size={18} className="text-charcoal" strokeWidth={1.75} />
         </div>
 
-        <p className="mb-7 text-[15px] leading-relaxed text-charcoal/70">
-          Start fresh. Set up a new household and invite your mates to join.
+        <h2 className="font-bridge text-lg font-medium text-charcoal md:text-xl">
+          Create a household
+        </h2>
+        <p className="mt-1.5 mb-7 text-sm leading-relaxed text-charcoal/70">
+          Start fresh. Establish your household ledger, configure rent splits, and invite roommates.
         </p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+        <form id="create-household-form" onSubmit={handleSubmit} className="flex flex-col gap-2">
           <label
             htmlFor="household-name"
-            className="text-sm font-medium text-charcoal/80"
+            className="text-xs font-semibold tracking-wider text-charcoal/80 uppercase"
           >
             Household Name
           </label>
@@ -69,32 +67,32 @@ export function CreateHouseholdForm() {
             id="household-name"
             name="household-name"
             type="text"
-            placeholder="e.g. The Sunny Loft"
+            placeholder="e.g. The Sunny Loft, Apt 4B"
             value={name}
             onChange={(e) => {
               setName(e.target.value);
               if (error) setError(null);
             }}
-            className="h-11 rounded-xl border border-sand-border bg-warm-ivory px-3.5 text-[15px] text-charcoal placeholder:text-charcoal/40 focus:border-charcoal focus:outline-none focus:ring-1 focus:ring-charcoal/15"
+            className="h-11 rounded-xl border border-sand-border bg-warm-ivory px-3.5 text-sm text-charcoal placeholder:text-charcoal/40 transition-colors focus:border-charcoal focus:ring-1 focus:ring-charcoal focus:outline-none"
           />
           {error && (
-            <p className="mt-1 text-xs text-terracotta">{error}</p>
+            <p className="mt-1.5 text-xs font-medium text-terracotta">{error}</p>
           )}
         </form>
       </div>
 
       <button
         type="submit"
-        onClick={handleSubmit}
+        form="create-household-form"
         disabled={loading}
-        className="mt-7 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-charcoal text-sm font-medium text-warm-ivory transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-8 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-charcoal text-sm font-medium text-warm-ivory shadow-sm transition-all duration-150 hover:bg-[#262622] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? (
-          <span className="h-4 w-4 animate-spin rounded-full border-2 border-warm-ivory/40 border-t-warm-ivory" />
+          <Loader2 className="h-4 w-4 animate-spin text-warm-ivory" />
         ) : (
           <>
             Create Household
-            <ArrowRight size={16} strokeWidth={2} />
+            <ArrowRight size={15} strokeWidth={2} />
           </>
         )}
       </button>

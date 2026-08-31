@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { DoorOpen, ArrowRight } from "lucide-react";
+import { KeyRound, ArrowRight, Loader2 } from "lucide-react";
 
 interface JoinHouseholdFormProps {
   initialCode?: string;
@@ -20,7 +20,7 @@ export function JoinHouseholdForm({ initialCode = "" }: JoinHouseholdFormProps) 
 
     const trimmed = code.trim().toUpperCase();
     if (trimmed.length < 6) {
-      setError("Enter the full invite code.");
+      setError("Enter the full 6-character invite code.");
       return;
     }
 
@@ -47,25 +47,23 @@ export function JoinHouseholdForm({ initialCode = "" }: JoinHouseholdFormProps) 
   }
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-card border border-sand-border bg-soft-sand/35 p-7 transition-colors duration-200 hover:border-charcoal/20 md:p-8">
+    <div className="group flex h-full flex-col justify-between rounded-2xl border border-sand-border bg-soft-sand/40 p-7 shadow-[0_2px_8px_rgba(23,23,20,0.03)] backdrop-blur-xs transition-all duration-200 hover:border-charcoal/30 hover:shadow-[0_4px_16px_rgba(23,23,20,0.06)] md:p-8">
       <div>
-        <div className="mb-4 flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-sand-border bg-warm-ivory">
-            <DoorOpen size={16} className="text-charcoal" strokeWidth={1.75} />
-          </div>
-          <h2 className="font-bridge text-lg text-charcoal md:text-xl">
-            Join a household
-          </h2>
+        <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-sand-border bg-warm-ivory shadow-xs">
+          <KeyRound size={18} className="text-charcoal" strokeWidth={1.75} />
         </div>
 
-        <p className="mb-7 text-[15px] leading-relaxed text-charcoal/70">
-          Already have mates set up? Enter your invite code to get started.
+        <h2 className="font-bridge text-lg font-medium text-charcoal md:text-xl">
+          Join a household
+        </h2>
+        <p className="mt-1.5 mb-7 text-sm leading-relaxed text-charcoal/70">
+          Already invited by your roommates? Enter your household invite code to jump in.
         </p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+        <form id="join-household-form" onSubmit={handleSubmit} className="flex flex-col gap-2">
           <label
             htmlFor="invite-code"
-            className="text-sm font-medium text-charcoal/80"
+            className="text-xs font-semibold tracking-wider text-charcoal/80 uppercase"
           >
             Invite Code
           </label>
@@ -73,33 +71,33 @@ export function JoinHouseholdForm({ initialCode = "" }: JoinHouseholdFormProps) 
             id="invite-code"
             name="invite-code"
             type="text"
-            placeholder="Enter 6-digit code"
+            placeholder="e.g. NEST-8X"
             value={code}
             onChange={(e) => {
               setCode(e.target.value);
               if (error) setError(null);
             }}
             maxLength={12}
-            className="h-11 rounded-xl border border-sand-border bg-warm-ivory px-3.5 text-[15px] uppercase tracking-widest text-charcoal placeholder:text-charcoal/40 placeholder:tracking-normal placeholder:normal-case focus:border-charcoal focus:outline-none focus:ring-1 focus:ring-charcoal/15"
+            className="h-11 rounded-xl border border-sand-border bg-warm-ivory px-3.5 font-mono text-sm uppercase tracking-wider text-charcoal placeholder:font-sans placeholder:tracking-normal placeholder:normal-case placeholder:text-charcoal/40 transition-colors focus:border-charcoal focus:ring-1 focus:ring-charcoal focus:outline-none"
           />
           {error && (
-            <p className="mt-1 text-xs text-terracotta">{error}</p>
+            <p className="mt-1.5 text-xs font-medium text-terracotta">{error}</p>
           )}
         </form>
       </div>
 
       <button
         type="submit"
-        onClick={handleSubmit}
+        form="join-household-form"
         disabled={loading}
-        className="mt-7 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-charcoal text-sm font-medium text-warm-ivory transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-8 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-charcoal text-sm font-medium text-warm-ivory shadow-sm transition-all duration-150 hover:bg-[#262622] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? (
-          <span className="h-4 w-4 animate-spin rounded-full border-2 border-warm-ivory/40 border-t-warm-ivory" />
+          <Loader2 className="h-4 w-4 animate-spin text-warm-ivory" />
         ) : (
           <>
             Join Household
-            <ArrowRight size={16} strokeWidth={2} />
+            <ArrowRight size={15} strokeWidth={2} />
           </>
         )}
       </button>
